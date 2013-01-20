@@ -7,6 +7,7 @@ class AlexaParser(object):
     CATEGORY_URL = "http://www.alexa.com/topsites/category"
 
     def get_categories(self):
+        """Yield website categories"""
         html = requests.get(self.CATEGORY_URL).text
         tree = etree.HTML(html)
         for ul in tree.xpath("//*[@id=\"topsites-category\"]/div[1]/div/ul"):
@@ -15,6 +16,7 @@ class AlexaParser(object):
                     yield a.text.strip()
 
     def get_websites(self, category):
+        """Yield website titles and URLs as tuple"""
         url = self.CATEGORY_URL + "/Top/" + category.replace(" ", "_")
         html = requests.get(url).text
         tree = etree.HTML(html)
