@@ -1,0 +1,51 @@
+{# Used custom twitter bootstrap styles:
+
+    Scaffolding
+        Normalize and reset
+        Body type and links
+        Layouts
+
+    Base CSS
+        Headings, body, etc
+        Tables
+
+    Components
+        Navs, tabs, and pills
+        Navbar
+
+    Responsive
+        Narrow tablets and below (<767px)
+        Large desktops (>1200px)
+        Responsive navbar
+
+
+    Customize variables:
+        Navbar
+            @navbarCollapseWidth: 450px;
+
+ #}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
+<style>
+    @media (min-width: 451px) {
+        body {
+            padding-top: 40px;
+        }
+    }
+
+    .table th.center,
+    .table td.center {
+        text-align: center;
+    }
+
+    .footer {
+        background-color: #F5F5F5;
+        border-top: 1px solid #E5E5E5;
+        margin-top: 70px;
+        padding: 30px 0;
+        text-align: center;
+    }
+    .footer p {
+        color: #777777;
+        margin-bottom: 0;
+    }
+</style>

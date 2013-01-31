@@ -1,10 +1,17 @@
 from datetime import timedelta, datetime
+import re
 
 from flask import render_template
 from model import Benchmark, CATEGORIES
 
 
 def init_routes(app):
+
+    spaces = re.compile('[\W_]+')
+
+    @app.template_filter('to_id')
+    def to_id(value):
+        return spaces.sub('-', value.lower().strip())
 
     count = app.config['BENCHMARKS_BY_CATEGORY']
     delta = app.config['BENCHMARKS_DATETIME']
