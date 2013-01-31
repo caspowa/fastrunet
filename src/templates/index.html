@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Benchmark Portal{% endblock %}
+
+{% block content %}
+    <ul>
+        {% for category, benchmarks in categories %}
+            <li>
+                <h3>{{ category }}</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Web Site</th>
+                            <th>Average Load Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for benchmark in benchmarks %}
+                            <tr>
+                                <td><a href="{{ benchmark.uri }}">{{ benchmark.title }}</a></td>
+                                <td>{{ benchmark.avg_load_time }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

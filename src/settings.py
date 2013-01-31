@@ -1,0 +1,11 @@
+from secret_keys import HIDDEN_SECRET_KEY
+
+
+DEBUG = True
+
+MONGODB_DB = 'bportal'
+
+SECRET_KEY = HIDDEN_SECRET_KEY
+
+BENCHMARKS_BY_CATEGORY = 50
+BENCHMARKS_DATETIME = dict(days=1)

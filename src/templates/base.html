@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>{% block title %}<!-- title block area -->{% endblock %}</title>
+
+    {% include 'includes/styles.html' %}
+</head>
+<body>
+    {% include 'includes/header.html' %}
+
+    <section class="bp-main">
+        {% block content %}<!-- main content area -->{% endblock %}
+    </section>
+
+    {% include 'includes/footer.html' %}
+
+    {% include 'includes/scripts.html' %}
+</body>
+</html>
