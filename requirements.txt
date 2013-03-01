@@ -1,4 +1,5 @@
 flask
 flask-mongoengine
 lxml
+pymongo
 uwsgi

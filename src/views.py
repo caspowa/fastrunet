@@ -18,7 +18,8 @@ def init_routes(app):
 
     def get_top_benchmarks(from_datetime, category):
         return Benchmark.objects.only('title', 'uri', 'avg_load_time')(
-            timestamp__gte=from_datetime, category=category)[:count]
+            timestamp__gte=from_datetime, category=category, status="recent"
+        )[:count]
 
     @app.route('/')
     def index():

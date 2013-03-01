@@ -31,6 +31,7 @@ class Benchmark(Document):
     category = StringField(choices=CATEGORIES)
     avg_load_time = FloatField(default=0)
     timestamp = DateTimeField(default=datetime.now)
+    status = StringField(max_length=8, required=True)
 
     def __unicode__(self):
         return self.uri
