@@ -36,6 +36,7 @@ class Benchmark(Document):
         return self.uri
 
     meta = {
+        'allow_inheritance': False,
         'collection': 'benchmarks',
         'ordering': ['avg_load_time'],
     }
