@@ -85,7 +85,7 @@ class Crawler():
         connection = MongoClient()
         self.collection = connection.bportal.benchmarks
 
-    def update(self, category, title, link, stats):
+    def update(self, category, rank, title, link, stats):
         avg_load_time = float(stats["Activity Time(ms)"]) / 1000
         self.collection.update(
             {"categoty": category, "title": title},
@@ -97,15 +97,17 @@ class Crawler():
             "timestamp": datetime.datetime.utcnow(),
             "uri": "http://" + link,
             "avg_load_time": '{0:.1f}'.format(avg_load_time),
-            "status": "recent"
+            "status": "recent",
+            "rank": rank
         })
 
     def crawl(self):
         for category in AlexaParser.get_categories():
-            for title, link in AlexaParser.get_websites(category):
+            for rank, (title, link) in \
+                    enumerate(AlexaParser.get_websites(category), start=1):
                 stats = WebPagetest.test(link)
                 if stats:
-                    self.update(category, title, link, stats)
+                    self.update(category, rank, title, link, stats)
 
 
 def main():

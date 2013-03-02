@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from flask.ext.mongoengine import Document
-from mongoengine import StringField, URLField, FloatField, DateTimeField
+from mongoengine import StringField, URLField, FloatField, DateTimeField, IntField
 
 
 CATEGORIES = (
@@ -32,6 +32,7 @@ class Benchmark(Document):
     avg_load_time = FloatField(default=0)
     timestamp = DateTimeField(default=datetime.now)
     status = StringField(max_length=8, required=True)
+    rank = IntField()
 
     def __unicode__(self):
         return self.uri

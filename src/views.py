@@ -13,8 +13,9 @@ def init_routes(app):
         return spaces.sub('-', value.lower().strip())
 
     def get_top_benchmarks(category):
-        benchmarks = Benchmark.objects.only('title', 'uri', 'avg_load_time')(
-            category=category, status="recent")
+        fields = ("rank", "title", "uri", "avg_load_time")
+        benchmarks = Benchmark.objects.only(*fields)(category=category,
+                                                     status="recent")
         return sorted(benchmarks, key=lambda b: float(b["avg_load_time"]))
 
     @app.route('/')

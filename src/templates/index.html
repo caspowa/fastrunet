@@ -15,13 +15,17 @@
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th class="span9 center">Web Site</th>
+                            <th class="span2">Speed Rank</th>
+                            <th class="span2">Alexa Rank</th>
+                            <th class="span9">Web Site</th>
                             <th class="span3 center">Average Load Time</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for benchmark in benchmarks %}
                             <tr>
+                                <td class="span2">{{ loop.index }}</td>
+                                <td class="span2">{{ benchmark.rank }}</td>
                                 <td class="span9"><a href="{{ benchmark.uri }}">{{ benchmark.title }}</a></td>
                                 <td class="span3 center">{{ benchmark.avg_load_time }}</td>
                             </tr>
