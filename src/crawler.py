@@ -37,15 +37,9 @@ class AlexaParser(object):
 
 class WebPagetest(object):
 
-    RUN_API = "http://www.webpagetest.org/runtest.php"
-    STATUS_API = "http://www.webpagetest.org/testStatus.php"
-    TESTCONFIG = {
-        "location": "Dulles:Chrome",  # TODO: self managed instance
-        "private": 1,
-        "f": "json",
-        "k": "8e3c759f8a1848c396bc7ccabb0d1a07",
-        "fvonly": 1
-    }
+    RUN_API = "http://webpagetest.caspowa.com/runtest.php"
+    STATUS_API = "http://webpagetest.caspowa.com/testStatus.php"
+    TESTCONFIG = {"private": 1, "f": "json", "fvonly": 1}
 
     @classmethod
     def wait_until_running(cls, r):
