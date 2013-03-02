@@ -65,7 +65,7 @@ class WebPagetest(object):
                                     delimiter=',')
             header = csv_reader.next()
             data = csv_reader.next()
-        except UnicodeEncodeError:
+        except (UnicodeEncodeError, StopIteration):
             return {}
         else:
             return dict((key, data[index]) for index, key in enumerate(header))
