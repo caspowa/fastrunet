@@ -89,7 +89,8 @@ class Crawler():
         avg_load_time = float(stats["Activity Time(ms)"]) / 1000
         self.collection.update(
             {"category": category, "title": title},
-            {"$set": {"status": "obsolete"}}
+            {"$set": {"status": "obsolete"}},
+            multi=True
         )
         self.collection.insert({
             "category": category,
