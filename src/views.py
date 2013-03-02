@@ -1,7 +1,26 @@
 import re
 
 from flask import render_template
-from model import Benchmark, CATEGORIES
+from model import Benchmark
+
+
+CATEGORIES = (
+    'Adult',
+    'Arts',
+    'Business',
+    'Computers',
+    'Games',
+    'Health',
+    'Home',
+    'Kids and Teens',
+    'News',
+    'Reference',
+    'Science',
+    'Shopping',
+    'Society',
+    'Sports',
+    'World',
+)
 
 
 def init_routes(app):
