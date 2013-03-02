@@ -5,7 +5,7 @@
 {% block content %}
     <ul class="nav nav-tabs bp-benchmarks">
         {% for category, benchmarks in categories %}
-            <li><a href="#{{ category|to_id }}">{{ category }}</a></li>
+            <li><a href="#{{ category|to_id }}" data-toggle="tab">{{ category }}</a></li>
         {% endfor %}
     </ul>
 
