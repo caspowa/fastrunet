@@ -6,7 +6,6 @@ from model import Benchmark
 
 CATEGORIES = (
     'Adult',
-    'Arts',
     'Business',
     'Computers',
     'Games',
