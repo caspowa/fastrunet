@@ -14,12 +14,12 @@ CATEGORIES = (
     'Home',
     'Kids and Teens',
     'News',
+    'Recreation',
     'Reference',
     'Science',
     'Shopping',
     'Society',
     'Sports',
-    'World',
 )
 
 
