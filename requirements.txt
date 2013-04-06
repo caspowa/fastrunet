@@ -1,7 +1,7 @@
-python-daemon
 flask
 flask-mongoengine
 lxml
 pymongo
+python-daemon
 requests
 uwsgi
