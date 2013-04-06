@@ -1,4 +1,4 @@
-python-daemom
+python-daemon
 flask
 flask-mongoengine
 lxml
