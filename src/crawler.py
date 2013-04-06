@@ -89,7 +89,7 @@ class Crawler():
 
     def update(self, category, rank, title, link, load_time):
         self.collection.update(
-            {"category": category, "title": title},
+            {"category": category, "uri": "http://" + link},
             {"$set": {"status": "obsolete"}},
             multi=True
         )
