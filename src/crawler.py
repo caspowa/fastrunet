@@ -9,6 +9,8 @@ import requests
 from lxml import etree
 from pymongo import MongoClient
 
+from logger import logger, daemon_context
+
 
 class AlexaParser(object):
 
@@ -76,6 +78,8 @@ class WebPagetest(object):
     @classmethod
     def test(cls, url):
         """Run test for given URL and return dictionary with stats"""
+        logger.info("Running test for: {0}".format(url))
+
         cls.TESTCONFIG["url"] = url
         r = requests.get(cls.RUN_API, params=cls.TESTCONFIG)
         cls.wait_until_running(r)
@@ -104,6 +108,7 @@ class Crawler():
             "status": "recent",
             "rank": rank
         })
+        logger.info("Successfully updated results for: {0}".format(link))
 
     def crawl(self):
         for category in AlexaParser.get_categories():
@@ -120,7 +125,7 @@ class Crawler():
 
 def main():
     crawler = Crawler()
-    with daemon.DaemonContext():
+    with daemon_context:
         while True:
             crawler.crawl()
 
