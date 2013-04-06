@@ -26,13 +26,15 @@ class AlexaParser(object):
     @classmethod
     def get_websites(cls, category):
         """Yield website titles and URLs as tuple"""
-        url = cls.CATEGORY_URL + "/Top/" + category.replace(" ", "_")
-        html = requests.get(url).text
-        tree = etree.HTML(html)
-        for li in tree.xpath("//*[@id=\"topsites-category\"]/ul/li"):
-            title = li.xpath("div[2]/h2/a")[0].text.strip()
-            link = li.xpath("div[2]/span")[0].text.strip()
-            yield title, link
+        category = category.replace(" ", "_")
+        for page in xrange(2):
+            url = cls.CATEGORY_URL + ";{0}/Top/".format(page) + category
+            html = requests.get(url).text
+            tree = etree.HTML(html)
+            for li in tree.xpath("//*[@id=\"topsites-category\"]/ul/li"):
+                title = li.xpath("div[2]/h2/a")[0].text.strip()
+                link = li.xpath("div[2]/span")[0].text.strip()
+                yield title, link
 
 
 class WebPagetest(object):
