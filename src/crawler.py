@@ -114,7 +114,7 @@ class Crawler():
                 )
                 if test_results:
                     median = test_results[len(test_results) / 2]
-                    load_time = median["Activity Time(ms)"] / 1000.0
+                    load_time = float(median["Activity Time(ms)"]) / 1000.0
                     self.update(category, rank, title, link, load_time)
 
 
