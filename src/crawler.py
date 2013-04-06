@@ -1,15 +1,14 @@
 import csv
-import daemon
 import datetime
 import time
 import StringIO
 
-
 import requests
 from lxml import etree
+from daemon import runner
 from pymongo import MongoClient
 
-from logger import logger, daemon_context
+from logger import logger
 
 
 class AlexaParser(object):
@@ -86,13 +85,24 @@ class WebPagetest(object):
         return cls.fetch_stats(r)
 
 
-class Crawler():
+class Daemon(object):
 
     def __init__(self):
+        self.stdin_path = "/dev/null"
+        self.stdout_path = "/dev/tty"
+        self.stderr_path = "/dev/tty"
+        self.pidfile_path = "/tmp/crawler.pid"
+        self.pidfile_timeout = 5
+
+
+class Crawler(Daemon):
+
+    def __init__(self):
+        super(Crawler, self).__init__()
         connection = MongoClient()
         self.collection = connection.bportal.benchmarks
 
-    def update(self, category, rank, title, link, load_time):
+    def _update(self, category, rank, title, link, load_time):
         self.collection.update(
             {"category": category, "$or": [{"uri": "http://" + link},
                                            {"rank": rank}]},
@@ -110,7 +120,7 @@ class Crawler():
         })
         logger.info("Successfully updated results for: {0}".format(link))
 
-    def crawl(self):
+    def _crawl(self):
         for category in AlexaParser.get_categories():
             for rank, (title, link) in \
                     enumerate(AlexaParser.get_websites(category), start=1):
@@ -120,14 +130,21 @@ class Crawler():
                 if test_results:
                     median = test_results[len(test_results) / 2]
                     load_time = float(median["Activity Time(ms)"]) / 1000.0
-                    self.update(category, rank, title, link, load_time)
+                    self._update(category, rank, title, link, load_time)
+
+    def run(self):
+        while True:
+            self._crawl()
 
 
 def main():
     crawler = Crawler()
-    with daemon_context:
-        while True:
-            crawler.crawl()
+    daemon_runner = runner.DaemonRunner(crawler)
+    daemon_runner.daemon_context.files_preserve = [logger.handlers[0].stream]
+    try:
+        daemon_runner.do_action()
+    except runner.DaemonRunnerStopFailureError:
+        pass
 
 if __name__ == "__main__":
     main()

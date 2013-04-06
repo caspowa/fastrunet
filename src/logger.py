@@ -1,6 +1,6 @@
-import daemon
 import logging
 import logging.config
+
 
 logging.config.dictConfig({
     'version': 1,
@@ -29,7 +29,3 @@ logging.config.dictConfig({
 })
 
 logger = logging.getLogger('daemon')
-
-daemon_context = daemon.DaemonContext(
-    files_preserve=[logger.handlers[0].stream],
-)
