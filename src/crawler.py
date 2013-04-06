@@ -1,4 +1,5 @@
 import csv
+import daemon
 import datetime
 import time
 import StringIO
@@ -119,8 +120,9 @@ class Crawler():
 
 def main():
     crawler = Crawler()
-    while True:
-        crawler.crawl()
+    with daemon.DaemonContext():
+        while True:
+            crawler.crawl()
 
 if __name__ == "__main__":
     main()
