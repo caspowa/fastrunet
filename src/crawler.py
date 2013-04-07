@@ -46,7 +46,7 @@ class WebPagetest(object):
     TESTCONFIG = {"private": 1, "f": "json", "fvonly": 1}
 
     @classmethod
-    def wait_until_running(cls, r):
+    def _wait_until_running(cls, r):
         """Wait until test in pending or running state"""
         params = {"test": r.json()["data"]["testId"]}
         while True:
@@ -60,7 +60,7 @@ class WebPagetest(object):
                 time.sleep(10)
 
     @classmethod
-    def fetch_stats(cls, r):
+    def _fetch_stats(cls, r):
         """Fetch test results in csv format and convert them to dictionary"""
         url = r.json()["data"]["summaryCSV"]
         try:
@@ -81,8 +81,8 @@ class WebPagetest(object):
 
         cls.TESTCONFIG["url"] = url
         r = requests.get(cls.RUN_API, params=cls.TESTCONFIG)
-        cls.wait_until_running(r)
-        return cls.fetch_stats(r)
+        cls._wait_until_running(r)
+        return cls._fetch_stats(r)
 
 
 class Daemon(object):
