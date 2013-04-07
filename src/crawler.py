@@ -122,8 +122,8 @@ class Crawler(Daemon):
 
     def _crawl(self):
         for category in AlexaParser.get_categories():
-            for rank, (title, link) in \
-                    enumerate(AlexaParser.get_websites(category), start=1):
+            websites = AlexaParser.get_websites(category)
+            for rank, (title, link) in enumerate(websites, start=1):
                 test_results = filter(
                     None, (WebPagetest.test(link) for _ in xrange(3))
                 )
