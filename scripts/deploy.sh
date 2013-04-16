@@ -1,5 +1,5 @@
 #!/bin/bash -ex
-virtualenv env
+virtualenv -p python2.7 env
 env/bin/pip install --timeout=120 -r requirements.txt
 
 if [ ! -f /tmp/bportal.pid ] && [ kill -0 `cat /tmp/uwsgi.bportal.pid` ]; then
