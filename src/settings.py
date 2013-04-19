@@ -6,6 +6,6 @@ DEBUG = True
 MONGODB_DB = 'bportal'
 MONGODB_HOST = 'db2.caspowa.com'
 MONGODB_USERNAME = 'caspowa'
-MONGODB_PASSWORD = 'Udn(1sd%asO2fv^asd(2,cc_asd'
+MONGODB_PASSWORD = 'Udn1sd2asO2_fvasd2cc_asd'
 
 SECRET_KEY = HIDDEN_SECRET_KEY
