@@ -1,7 +1,8 @@
-flask
-flask-mongoengine
-lxml
-pymongo
-python-daemon
-requests
-uwsgi
+flask==0.9
+flask-mongoengine==0.6
+lxml==3.2.0
+pymongo==2.5
+python-daemon==1.6
+requests==1.2.0
+uwsgi==1.9.8
+mongoengine==0.7.10
