@@ -1,4 +1,4 @@
-bportal
+rastrunet.ru
 =======
 
 Benchmarking portal
