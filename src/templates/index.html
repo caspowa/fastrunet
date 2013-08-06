@@ -1,38 +1,32 @@
 {% extends "base.html" %}
 
-{% block title %}Being Fast{% endblock %}
+{% block title %}Fast Runet{% endblock %}
 
 {% block content %}
-    <ul class="nav nav-tabs bp-benchmarks">
-        {% for category, benchmarks in categories %}
-            <li><a href="#{{ category|to_id }}" data-toggle="tab">{{ category }}</a></li>
-        {% endfor %}
-    </ul>
-
-    <div class="tab-content">
-        {% for category, benchmarks in categories %}
-            <div class="tab-pane" id="{{ category|to_id }}">
-                <table class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th class="span2">Speed Rank</th>
-                            <th class="span2">Alexa Rank</th>
-                            <th class="span9">Website</th>
-                            <th class="span3 center">Seconds to Load</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for benchmark in benchmarks %}
-                            <tr>
-                                <td class="span2">{{ loop.index }}</td>
-                                <td class="span2">{{ benchmark.rank }}</td>
-                                <td class="span9"><a href="{{ benchmark.uri }}">{{ benchmark.title }}</a></td>
-                                <td class="span3 center">{{ benchmark.avg_load_time }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        {% endfor %}
-    </div>
+    {% for category, benchmarks in categories %}
+        <table id="{{ category|to_id }}" class="table-list__i">
+            <thead>
+                <tr>
+                    <th class="table-list__no">A Speed Rank</th>
+                    <th class="table-list__rank">Alexa Rank</th>
+                    <th class="table-list__site">Website</th>
+                    <th class="table-list__load-time">Sec. to Load</th>
+                    <th class="table-list__position-change">&nbsp;</th>
+                    <th class="table-list__caspowa">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for benchmark in benchmarks %}
+                    <tr>
+                        <td class="table-list__no">{{ loop.index }}</td>
+                        <td class="table-list__rank">{{ benchmark.rank }}</td>
+                        <td class="table-list__site"><a href="{{ benchmark.uri }}">{{ benchmark.title }}</a></td>
+                        <td class="table-list__load-time">{{ benchmark.avg_load_time }}</td>
+                        <td class="table-list__position-change"><i class="ico ico_new"></i></td>
+                        <td class="table-list__caspowa"><span class="ico ico_logo"></span></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endfor %}
 {% endblock %}

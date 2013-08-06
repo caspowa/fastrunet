@@ -1,0 +1,201 @@
+/* page */
+.page {
+  position: relative;
+  min-height: 1640px;
+  overflow: hidden;
+  padding-bottom: 270px;
+  .border-box;
+}
+
+.page__scroll {
+  height: 100%;
+  overflow: auto;
+}
+
+/* section */
+.section {
+  width: 975px;
+  margin: auto;
+  position: relative;
+  z-index: 30;
+}
+
+/* side */
+.side {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 36px;
+  width: 192px;
+}
+
+/* side__nav */
+.side__nav {
+  position: relative;
+  padding: 44px 0 60px;
+}
+
+.side__nav UL {
+
+}
+
+.side__nav LI {
+
+}
+
+.side__nav LI A {
+  color: @base-color;
+  text-decoration: none;
+  display: block;
+  height: 39px;
+  width: 185px;
+  font: @font-nav;
+  .border-box;
+  padding-left: 15px;
+}
+
+.side__nav LI:hover A {
+  background: url(../images/spr-ico.png) no-repeat -1px -178px;
+}
+
+.side__nav LI.cur A,
+.side__nav LI.cur:hover A {
+  background: url(../images/spr-ico.png) no-repeat -1px -221px;
+  cursor: default;
+}
+
+/* share */
+.share {
+  position: relative;
+}
+
+.share LI {
+  padding-left: 15px;
+}
+
+.share LI+LI {
+  margin-top: 8px;
+}
+
+.share LI A {
+  background: url(../images/spr-ico.png) no-repeat;
+  width: 40px;
+  height: 40px;
+  display: block;
+}
+
+.share LI A.twi {
+  background-position: 0 0;
+}
+
+.share LI A.twi:hover {
+  background-position: -42px 0;
+}
+
+.share LI A.twi:active {
+  background-position: -86px 0;
+}
+
+.share LI A.fb {
+  background-position: -1px -43px;
+}
+
+.share LI A.fb:hover {
+  background-position: -43px -43px;
+}
+
+.share LI A.fb:active {
+  background-position: -86px -43px;
+}
+
+.share LI A.rss {
+  background-position: -1px -86px;
+}
+
+.share LI A.rss:hover {
+  background-position: -43px -86px;
+}
+
+.share LI A.rss:active {
+  background-position: -86px -86px;
+}
+
+.share LI A.gplus {
+  background-position: -1px -129px;
+}
+
+.share LI A.gplus:hover {
+  background-position: -43px -129px;
+}
+
+.share LI A.gplus:active {
+  background-position: -86px -129px;
+}
+
+/* table-list */
+.table-list {
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  z-index: 12;
+}
+
+.table-list>I {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 47px;
+  z-index: 5;
+  background: url(../images/ov.png) repeat-x;
+}
+
+.table-list__i {
+  display: none;
+  width: 740px;
+  position: relative;
+  z-index: 2;
+}
+
+.table-list__i TR:hover TD {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAMAAAAoyzS7AAAAA1BMVEUAa4m1F7QyAAAAAXRSTlMmkutdmwAAAA1JREFUeNoBAgD9/wAAAAIAAVMrnDAAAAAASUVORK5CYII=);
+}
+
+.table-list__i TH {
+  font: @font-th;
+  color: @lwhite;
+  vertical-align: top;
+  height: 37px;
+}
+
+.table-list__i TD {
+  height: 52px;
+  vertical-align: middle;
+  font: @font-td;
+}
+
+.table-list__i .table-list__no {
+  width: 100px;
+  padding-left: 18px;
+}
+
+.table-list__i .table-list__rank {
+  width: 90px;
+}
+
+.table-list__i .table-list__site {
+  width: 345px;
+}
+
+.table-list__i .table-list__load-time {
+  width: 75px;
+}
+
+.table-list__i .table-list__position-change {
+  width: 20px;
+  padding-right: 30px;
+  text-align: center;
+}
+
+.table-list__i .table-list__caspowa {
+  padding-right: 18px;
+}
