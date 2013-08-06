@@ -1,7 +1,7 @@
 import csv
 import datetime
 import time
-import StringIO
+import io
 
 import requests
 from lxml import etree
@@ -29,7 +29,7 @@ class AlexaParser(object):
     def get_websites(cls, category):
         """Yield website titles and URLs as tuple"""
         category = category.replace(" ", "_")
-        for page in xrange(2):
+        for page in range(2):
             url = cls.CATEGORY_URL + ";{0}/Top/".format(page) + category
             html = requests.get(url).text
             tree = etree.HTML(html)
@@ -65,10 +65,9 @@ class WebPagetest(object):
         url = r.json()["data"]["summaryCSV"]
         try:
             summary_csv = requests.get(url).text
-            csv_reader = csv.reader(StringIO.StringIO(summary_csv),
-                                    delimiter=',')
-            header = csv_reader.next()
-            data = csv_reader.next()
+            csv_reader = csv.reader(io.StringIO(summary_csv), delimiter=',')
+            header = next(csv_reader)
+            data = next(csv_reader)
         except (UnicodeEncodeError, StopIteration):
             return {}
         else:
@@ -124,9 +123,8 @@ class Crawler(Daemon):
         for category in AlexaParser.get_categories():
             websites = AlexaParser.get_websites(category)
             for rank, (title, link) in enumerate(websites, start=1):
-                test_results = filter(
-                    None, (WebPagetest.test(link) for _ in xrange(3))
-                )
+                test_results = [test for test in (WebPagetest.test(link)
+                                                  for _ in range(3)) if test]
                 if test_results:
                     median = test_results[len(test_results) / 2]
                     load_time = float(median["Activity Time(ms)"]) / 1000.0

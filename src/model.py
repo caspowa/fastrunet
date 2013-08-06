@@ -1,5 +1,6 @@
 from flask.ext.mongoengine import Document
-from mongoengine import StringField, URLField, FloatField, DateTimeField, IntField
+from mongoengine import (StringField, IntField, FloatField, DateTimeField,
+                         URLField)
 
 
 class Benchmark(Document):
