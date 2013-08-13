@@ -1,5 +1,3 @@
-import re
-
 from flask import render_template
 
 from model import Benchmark
@@ -24,12 +22,6 @@ CATEGORIES = (
 
 
 def init_routes(app):
-
-    spaces = re.compile('[\W_]+')
-
-    @app.template_filter('to_id')
-    def to_id(value):
-        return spaces.sub('-', value.lower().strip())
 
     def get_top_benchmarks(category):
         fields = ("rank", "title", "uri", "avg_load_time")

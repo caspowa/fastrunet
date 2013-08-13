@@ -3,18 +3,18 @@
     $(function () {
         var switchCategory = function () {
             var hash = location.hash.replace('#', '');
-            $('.table-list__i').hide();
-            $('#' + hash.replace(/ /g, '-')).show();
-            $('.side__nav li').removeClass('cur');
-            $('a[href="#' + hash + '"]').closest('li').addClass('cur');
+            var category = $('.table-list__i[data-category="' + hash + '"]');
+            if (category.length) {
+                category.siblings().hide();
+                category.show();
+                var link = $('.side__nav a[href="#' + hash + '"]').closest('li');
+                link.siblings().removeClass('cur');
+                link.addClass('cur');
+            } else {
+                location.hash = $('.table-list__i:first').data('category');
+            }
         };
-        $(window).on('hashchange', switchCategory);
-
-        if (!location.hash) {
-            location.hash = $('.table-list__i:first').attr('id');
-        } else {
-            switchCategory();
-        }
+        $(window).on('hashchange', switchCategory).trigger('hashchange');
 
         $('.js-lax').each(function () {
             var el = $(this),

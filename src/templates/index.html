@@ -4,7 +4,7 @@
 
 {% block content %}
     {% for category, benchmarks in categories %}
-        <table id="{{ category|to_id }}" class="table-list__i">
+        <table class="table-list__i" data-category="{{ category|lower }}">
             <thead>
                 <tr>
                     <th class="table-list__no">A Speed Rank</th>
