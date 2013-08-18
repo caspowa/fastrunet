@@ -4,20 +4,21 @@ from model import Benchmark
 
 
 CATEGORIES = (
-    'Adult',
-    'Business',
-    'Computers',
-    'Games',
-    'Health',
-    'Home',
-    'Kids and Teens',
-    'News',
-    'Recreation',
-    'Reference',
-    'Science',
-    'Shopping',
-    'Society',
-    'Sports',
+    'Развлечения',
+    'Hi-Tech',
+    'Авто',
+    'Бизнес',
+    'Отдых',
+    'Спорт',
+    'Игровая',
+    'СМИ',
+    'Порталы',
+    'Дом',
+    'Работа',
+    'Учёба',
+    'Справки',
+    'Общество',
+    'Культура',
 )
 
 

@@ -7,12 +7,10 @@
         <table class="table-list__i" data-category="{{ category|lower }}">
             <thead>
                 <tr>
-                    <th class="table-list__no">A Speed Rank</th>
-                    <th class="table-list__rank">Alexa Rank</th>
+                    <th class="table-list__no">Speed Rank</th>
+                    <th class="table-list__rank">Yandex Rank</th>
                     <th class="table-list__site">Website</th>
-                    <th class="table-list__load-time">Sec. to Load</th>
-                    <th class="table-list__position-change">&nbsp;</th>
-                    <th class="table-list__caspowa">&nbsp;</th>
+                    <th class="table-list__load-time">Seconds to Load</th>
                 </tr>
             </thead>
             <tbody>
@@ -22,8 +20,6 @@
                         <td class="table-list__rank">{{ benchmark.rank }}</td>
                         <td class="table-list__site"><a href="{{ benchmark.uri }}">{{ benchmark.title }}</a></td>
                         <td class="table-list__load-time">{{ benchmark.avg_load_time }}</td>
-                        <td class="table-list__position-change"><i class="ico ico_new"></i></td>
-                        <td class="table-list__caspowa"><span class="ico ico_logo"></span></td>
                     </tr>
                 {% endfor %}
             </tbody>

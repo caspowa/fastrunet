@@ -5,38 +5,53 @@ import io
 
 import requests
 from lxml import etree
-from daemon import runner
 from pymongo import MongoClient
 
 from logger import logger
 
 
-class AlexaParser(object):
+class YandexParser(object):
 
-    CATEGORY_URL = "http://www.alexa.com/topsites/category"
+    BASE_URL = "http://yaca.yandex.ru/"
+
+    CATEGORIES = {
+        "Развлечения": "/yca/ungrp/cat/Entertainment/",
+        "Hi-Tech": "/yca/ungrp/cat/Computers/",
+        "Авто": "/yca/ungrp/cat/Automobiles/",
+        "Бизнес": "/yca/ungrp/cat/Business/",
+        "Отдых": "/yca/ungrp/cat/Rest/",
+        "Спорт": "/yca/ungrp/cat/Sports/",
+        "СМИ": "/yca/ungrp/cat/Media/",
+        "Порталы": "/yca/ungrp/cat/Portals/",
+        "Дом": "/yca/ungrp/cat/Private_Life/",
+        "Работа": "/yca/ungrp/cat/Employment/",
+        "Учёба": "/yca/ungrp/cat/Science/",
+        "Справки": "/yca/ungrp/cat/Reference/",
+        "Общество": "/yca/ungrp/cat/Society/",
+        "Культура": "/yca/ungrp/cat/Culture/",
+        "Производство": "/yca/ungrp/cat/Business/Production/",
+    }
 
     @classmethod
     def get_categories(cls):
         """Yield website categories"""
-        html = requests.get(cls.CATEGORY_URL).text
+        html = requests.get(cls.BASE_URL).text
         tree = etree.HTML(html)
-        for ul in tree.xpath("//*[@id=\"topsites-category\"]/div[1]/div/ul"):
-            for li in ul.xpath("li"):
-                for a in li.xpath("a"):
-                    yield a.text.strip()
+        for div1 in tree.xpath("/html/body/table[2]/tr/td[2]/div/div"):
+            for div2 in div1.xpath("div"):
+                for a in div2.xpath("dl/dt/a[2]"):
+                    print(a.text.strip())
 
     @classmethod
-    def get_websites(cls, category):
-        """Yield website titles and URLs as tuple"""
-        category = category.replace(" ", "_")
+    def get_websites(cls, href):
         for page in range(2):
-            url = cls.CATEGORY_URL + ";{0}/Top/".format(page) + category
+            url = "{0}{1}{2}.html".format(cls.BASE_URL, href, page)
             html = requests.get(url).text
             tree = etree.HTML(html)
-            for li in tree.xpath("//*[@id=\"topsites-category\"]/ul/li"):
-                title = li.xpath("div[2]/h2/a")[0].text.strip()
-                link = li.xpath("div[2]/span")[0].text.strip()
-                yield title, link
+            for li in tree.xpath("/html/body/table[4]/tr/td[2]/ol/li"):
+                text = li.xpath("h3/a[1]")[0].text
+                link = li.xpath("h3/a[1]/@href")[0]
+                yield text, link
 
 
 class WebPagetest(object):
@@ -65,7 +80,7 @@ class WebPagetest(object):
         url = r.json()["data"]["summaryCSV"]
         try:
             summary_csv = requests.get(url).text
-            csv_reader = csv.reader(io.StringIO(summary_csv), delimiter=',')
+            csv_reader = csv.reader(io.StringIO(summary_csv), delimiter=",")
             header = next(csv_reader)
             data = next(csv_reader)
         except (UnicodeEncodeError, StopIteration):
@@ -99,7 +114,7 @@ class Crawler(Daemon):
     def __init__(self):
         super(Crawler, self).__init__()
         connection = MongoClient()
-        self.collection = connection.bportal.benchmarks
+        self.collection = connection.fastrunet.benchmarks
 
     def _update(self, category, rank, title, link, load_time):
         self.collection.update(
@@ -113,20 +128,20 @@ class Crawler(Daemon):
             "title": title,
             "timestamp": datetime.datetime.utcnow(),
             "uri": "http://" + link,
-            "avg_load_time": '{0:.1f}'.format(load_time),
+            "avg_load_time": "{0:.1f}".format(load_time),
             "status": "recent",
             "rank": rank
         })
         logger.info("Successfully updated results for: {0}".format(link))
 
     def _crawl(self):
-        for category in AlexaParser.get_categories():
-            websites = AlexaParser.get_websites(category)
+        for category, href in YandexParser.CATEGORIES.items():
+            websites = YandexParser.get_websites(href)
             for rank, (title, link) in enumerate(websites, start=1):
                 test_results = [test for test in (WebPagetest.test(link)
                                                   for _ in range(3)) if test]
                 if test_results:
-                    median = test_results[len(test_results) / 2]
+                    median = test_results[round(len(test_results) / 2)]
                     load_time = float(median["Activity Time(ms)"]) / 1000.0
                     self._update(category, rank, title, link, load_time)
 
@@ -137,12 +152,7 @@ class Crawler(Daemon):
 
 def main():
     crawler = Crawler()
-    daemon_runner = runner.DaemonRunner(crawler)
-    daemon_runner.daemon_context.files_preserve = [logger.handlers[0].stream]
-    try:
-        daemon_runner.do_action()
-    except runner.DaemonRunnerStopFailureError:
-        pass
+    crawler.run()
 
 if __name__ == "__main__":
     main()
