@@ -18,7 +18,7 @@
                     <tr>
                         <td class="table-list__no">{{ loop.index }}</td>
                         <td class="table-list__rank">{{ benchmark.rank }}</td>
-                        <td class="table-list__site"><a href="{{ benchmark.uri }}">{{ benchmark.title }}</a></td>
+                        <td class="table-list__site"><a href="{{ benchmark.uri }}" target="_blank">{{ benchmark.title }}</a></td>
                         <td class="table-list__load-time">{{ benchmark.avg_load_time }}</td>
                     </tr>
                 {% endfor %}
