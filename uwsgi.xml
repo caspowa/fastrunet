@@ -1,0 +1,13 @@
+<uwsgi>
+    <module>app_wsgi:app</module>
+    <env>/home/jenkins/workspace/fastrunet-deploy/env</env>
+    <pythonpath>/home/jenkins/workspace/fastrunet-deploy/src</pythonpath>
+    <socket>/tmp/uwsgi.fastrunet.sock</socket>
+    <chmod-socket>777</chmod-socket>
+    <pidfile>/tmp/uwsgi.fastrunet.pid</pidfile>
+    <daemonize>uwsgi.fastrunet.log</daemonize>
+    <processes>4</processes>
+    <threads>2</threads>
+    <lazy-app/>
+    <master/>
+</uwsgi>
