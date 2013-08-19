@@ -127,7 +127,7 @@ class Crawler(Daemon):
             "category": category,
             "title": title,
             "timestamp": datetime.datetime.utcnow(),
-            "uri": "http://" + link,
+            "uri": link,
             "avg_load_time": "{0:.1f}".format(load_time),
             "status": "recent",
             "rank": rank
