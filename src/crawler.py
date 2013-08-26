@@ -33,16 +33,6 @@ class YandexParser(object):
     }
 
     @classmethod
-    def get_categories(cls):
-        """Yield website categories"""
-        html = requests.get(cls.BASE_URL).text
-        tree = etree.HTML(html)
-        for div1 in tree.xpath("/html/body/table[2]/tr/td[2]/div/div"):
-            for div2 in div1.xpath("div"):
-                for a in div2.xpath("dl/dt/a[2]"):
-                    print(a.text.strip())
-
-    @classmethod
     def get_websites(cls, href):
         for page in range(2):
             url = "{0}{1}{2}.html".format(cls.BASE_URL, href, page)
