@@ -36,12 +36,13 @@ class YandexParser(object):
     def get_websites(cls, href):
         for page in range(2):
             url = "{0}{1}{2}.html".format(cls.BASE_URL, href, page)
-            html = requests.get(url).text
-            tree = etree.HTML(html)
-            for li in tree.xpath("/html/body/table[4]/tr/td[2]/ol/li"):
-                text = li.xpath("h3/a[1]")[0].text
-                link = li.xpath("h3/a[1]/@href")[0]
-                yield text, link
+            r = requests.get(url=url, allow_redirects=False)
+            if r.status_code == 200:
+                tree = etree.HTML(r.text)
+                for li in tree.xpath("/html/body/table[4]/tr/td[2]/ol/li"):
+                    text = li.xpath("h3/a[1]")[0].text
+                    link = li.xpath("h3/a[1]/@href")[0]
+                    yield text, link
 
 
 class WebPagetest(object):
