@@ -1,5 +1,9 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>
+    function trackOutboundLink(action) {
+        ga('send', 'event', 'outbound link', action);
+    }
+
     $(function () {
         var switchCategory = function () {
             var hash = location.hash.replace('#', '');
@@ -28,7 +32,13 @@
 
                 el.css('margin-top', el_mt + el_h + el_shift * perc);
         }).trigger('scroll');
-    });
+        });
+
+        $(document).ready(function () {
+            $('#powered_by_caspowa_link').on('click', function () {
+                trackOutboundLink('redirect to Caspowa');
+            });
+        });
     });
 </script>
 <script type="text/javascript">
