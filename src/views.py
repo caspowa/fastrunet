@@ -35,3 +35,7 @@ def init_routes(app):
         categories = [(category, get_top_benchmarks(category))
                       for category in CATEGORIES]
         return render_template('index.html', categories=categories)
+
+    @app.route('/exclude')
+    def exclude():
+        return render_template('exclude.html')
